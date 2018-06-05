@@ -162,15 +162,37 @@ export interface TransformOptions {
     /** Indicate the mode the code should be parsed in. Can be either “script” or “module”. Default: "module" */
     sourceType?: "script" | "module";
 
-    /** An optional callback that can be used to wrap visitor methods.
-     *  NOTE: This is useful for things like introspection, and not really needed for implementing anything.
+    /**
+     * An optional callback that can be used to wrap visitor methods.
+     * NOTE: This is useful for things like introspection, and not really needed for implementing anything.
      */
     wrapPluginVisitorMethod?(pluginAlias: string, visitorType: 'enter' | 'exit', callback: (path: NodePath, state: any) => void): (path: NodePath, state: any) => void ;
+}
+
+export interface BabelFileModulesMetadata {
+    imports: object[];
+    exports: {
+        exported: object[],
+        specifiers: object[]
+    };
+}
+
+export interface BabelFileMetadata {
+    usedHelpers: string[];
+    marked: Array<{
+        type: string;
+        message: string;
+        loc: object;
+    }>;
+    modules: BabelFileModulesMetadata;
 }
 
 export interface BabelFileResult {
     ast?: Node;
     code?: string;
+    ignored?: boolean;
     map?: object;
+    metadata?: BabelFileMetadata;
 }
+
 export as namespace babel;

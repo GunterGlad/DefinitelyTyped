@@ -19,14 +19,6 @@ export interface MkdirOptions {
 }
 
 // promisified versions
-/**
- * copyAsync
- * @param src
- * @param dest
- * @param options
- *              CopyFilter: filter
- *              CopyOptions: options
- */
 export function copyAsync(src: string, dest: string, options?: CopyFilter | CopyOptions): Promise<void>;
 
 export function createFileAsync(file: string): Promise<void>;
@@ -73,34 +65,11 @@ export function openAsync(path: string, flags: string, mode?: string): Promise<n
 export function utimesAsync(path: string, atime: number, mtime: number): Promise<void>;
 export function futimesAsync(fd: number, atime: number, mtime: number): Promise<void>;
 export function fsyncAsync(fd: number): Promise<void>;
-export function writeAsync(fd: number, buffer: NodeBuffer, offset: number, length: number, position: number): Promise<[number, NodeBuffer]>;
-export function readAsync(fd: number, buffer: NodeBuffer, offset: number, length: number, position: number): Promise<[number, NodeBuffer]>;
-/**
- * readFileAsync
- * @param filename
- * @param options:
- *              string: encoding
- *              ReadOptions: options
- */
+export function writeAsync(fd: number, buffer: Buffer, offset: number, length: number, position: number): Promise<[number, Buffer]>;
+export function readAsync(fd: number, buffer: Buffer, offset: number, length: number, position: number): Promise<[number, Buffer]>;
 export function readFileAsync(filename: string, options: string | ReadOptions): Promise<string>;
-export function readFileAsync(filename: string): Promise<NodeBuffer>;
-/**
- * writeFileAsync
- * @param filename
- * @param data
- * @param options:
- *              string: encoding
- *              WriteOptions: options
- */
+export function readFileAsync(filename: string): Promise<Buffer>;
 export function writeFileAsync(filename: string, data: any, options?: string | WriteOptions): Promise<void>;
-/**
- * appendFileAsync
- * @param filename
- * @param data
- * @param options:
- *              string: encoding
- *              WriteOptions: options
- */
 export function appendFileAsync(filename: string, data: any, option?: string | WriteOptions): Promise<void>;
 
 export function existsAsync(path: string): Promise<boolean>;

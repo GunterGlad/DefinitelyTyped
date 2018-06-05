@@ -7,6 +7,7 @@ import { Record, RecordReference } from './record';
 import { RecordResult } from './record-result';
 import { Connection } from './connection';
 import { SalesforceId } from './salesforce-id';
+import { Batch, BatchResultInfo } from './batch';
 
 export class SObject<T> {
     record(id: SalesforceId): RecordReference<T>;
@@ -52,16 +53,13 @@ export class SObject<T> {
     quickAction(actionName: string): QuickAction;
     quickActions(callback?: (err: Error, info: any) => void): Promise<any>;
     recent(callback?: (err: Error, ret: RecordResult) => void): Promise<RecordResult>;
-    select(callback?: (err: Error, ret: T[]) => void): Promise<T[]>;
+    select(callback?: (err: Error, ret: T[]) => void): Query<T[]>;
     // TODO:use a typed pluck to turn `fields` into a subset of T's fields so that the output is slimmed down appropriately
-    select(fields?: {[P in keyof T]: boolean}  | Array<(keyof T)> | (keyof T), callback?: (err: Error, ret: Array<Partial<T>>) => void): Promise<Array<Partial<T>>>;
+    select(fields?: {[P in keyof T]: boolean}  | Array<(keyof T)> | (keyof T), callback?: (err: Error, ret: Array<Partial<T>>) => void): Query<Array<Partial<T>>>;
 }
 
 export interface ApprovalLayoutInfo {
     approvalLayouts: Object[];
-}
-
-export class Batch extends stream.Writable {
 }
 
 export interface CompactLayoutInfo {
@@ -86,19 +84,6 @@ export interface LayoutInfo {
 
 export class ListView {
     constructor(connection: Connection, type: string, id: SalesforceId)
-}
-
-export interface BatchInfo {
-    id: string;
-    jobId: string;
-    state: string;
-    stateMessage: string;
-}
-
-export interface BatchResultInfo {
-    id: string;
-    batchId: string;
-    jobId: string;
 }
 
 export class ListViewsInfo { }
